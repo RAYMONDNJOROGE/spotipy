@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spotify Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Search for a Song</h1>
+    <form method="POST">
+        <input type="text" name="query" placeholder="e.g. Imagine Dragons" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if track %}
+        <h2>Result:</h2>
+        <div class="result-card">
+            <p><strong>{{ track.name }}</strong> by {{ track.artists[0].name }}</p>
+            {% if track.album.images %}
+                <img src="{{ track.album.images[1].url }}" alt="Album Cover" width="250">
+            {% endif %}
+            {% if track.preview_url %}
+                <audio controls>
+                    <source src="{{ track.preview_url }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            {% else %}
+                <p><em>No preview available</em></p>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
